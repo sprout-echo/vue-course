@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>快递单号</title>
+    <style type="text/css">
+    body{background: #efefef;}
+    *{padding: 0;margin:0;font-family: 微软雅黑;}
+    #app{position: relative;width:100%;height:100%;}
+    #cover{width: 100%;height:25%;background: -webkit-radial-gradient(center,#7aa4b0,#224153);padding: 5% 0;}
+    h1{color: #fff;width: 70%;margin:0 15%;}
+    input{background: transparent;border:1px solid #eee; padding: 6px;border-radius: 3px;margin:10px 10px 5px 15%;width: 220px;outline: none}
+    button{padding: 6px 10px;border-radius: 3px;background: #94c51e;border:0px;color: #fff;cursor: pointer;outline: none;}
+    table{text-align: center;width:70%;margin:-40px 15%;background: #fff;border:0px;border-radius: 3px;font-size: 13px;}
+    th,td{border-left:1px solid #eee;border-bottom:1px solid #eee;padding: 3px;}
+    thead{background: #444;color: #fff;}
+    thead th{padding: 8px;}
+    .modyBtn{background: #707ec5;}
+    .delBtn{background: #f5af3d;}
+    .dialog label{display: inline-block;width:100px;text-align: right;}
+    .dialog input,.dialog select{display: inline-block;margin-left: 10px;border:1px solid #999;padding: 6px;border-radius: 3px;outline: none;
+    }
+    .dialog-header{padding: 8px;background: #444;color: #fff;}
+    .dialog-footer{margin:10px 30%;}
+    .dialog{width: 500px;position: fixed;left:50%;transform:translateX(-50%);top:120px;z-index: 2000;}
+    .dialog-content {
+        border-radius: 3px;
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: .5s ease-in-out;
+    }
+    .dialog-mask{content: "";position: fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:1000;background: rgba(0,0,0,0.5);transition: all 0.6s;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="cover">
+            <h1>快递单号</h1>
+            <div id="search">
+                <input type="text" @input="search" placeholder="search..."/>
+                <button @click="addDialog" class="addBtn">新增</button>
+            </div>
+
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for='col in columns'>
+                            {{col.title }}
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-cloak v-for="(item,index) in slist">
+                        <td v-for="col in columns">
+                            {{item[col.title]}}
+                        </td>
+                        <td>
+                            <button class="modyBtn" @click="openEditDialog(index)">修改</button>
+                            <button @click="del(index)" class="delBtn">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <dialog-s :isactive="isActive" :title="title" :list="selectedlist" :columns="columns" @change="changeOverlay" @savelist="savelist"></dialog>
+
+    </div>
+</body>
+<script src='./vue2.js'></script>
+<script>
+    Vue.component('dialog-s',{
+        props:['isactive','list','columns','title'],
+        template:`<div>
+                    <div class="dialog" v-show="isactive">
+                    <div class="dialog-content">
+                        <header class="dialog-header">
+                            <h3>{{title}}</h3>
+                        </header>
+                        <div class="dialog-body">
+                            <div v-for="col in columns">
+                                <label>{{col.title}}</label>
+                                <select v-if="col.addrSource" v-model="modifylist[col.title]">
+                                    <option v-for="addr in col.addrSource">{{addr}}</option>
+                                </select>
+                                <select v-if="col.dataSource" v-model="modifylist[col.title]">
+                                    <option v-for="opt in col.dataSource" :value="opt">{{opt}}</option>
+                                </select>
+                                <input v-else type="text" v-model="modifylist[col.title]"/>
+                            </div>
+                        </div>
+                        <footer class="dialog-footer">
+                            <button @click="save">Save</button>
+                            <button @click="changeActive">Close</button>
+                        </footer>
+                    </div>
+
+                </div>
+                <div class="dialog-mask" v-show="isactive"></div></div>`,
+        computed: {
+            modifylist() {
+                return this.list;
+            }
+        },
+        methods:{
+            changeActive(){
+                this.$emit('change')
+            },
+            save:function(){
+
+                this.$emit('savelist',this.modifylist);
+            }
+        }
+
+    })
+    new Vue({
+        el:'#app',
+        data:{
+            sindex:-1,
+            isActive:false,
+            title:'',
+            mode:'',
+            selectedlist:{},
+            searchlist:[],
+            slist:[],
+            searchQuery:'',
+            columns:[
+                {title:'name'},
+                {title:'phone'},
+                {
+                    title:'address',
+                    addrSource:['山西省','陕西省','广东省','河南省','四川省','江苏省','福建省','湖南省','湖北省','上海市','北京市','云南省','青海省']
+                },
+                {
+                    title:'type',
+                    dataSource:['中通','圆通','顺丰','韵达','申通']
+                },
+                {title:'number'}
+            ],
+            list:[
+                {name:'andy',phone:'18888889999',address:'山西省',type:'中通',number:'45006677902'},
+                {name:'tony',phone:'14488678099',address:'山西省',type:'圆通',number:'45002804344'},
+                {name:'Lily',phone:'188255699709',address:'陕西省',type:'韵达',number:'32006677902'},
+            ]
+        },
+        created(){
+            this.setSlist(this.list)
+        },
+        methods:{
+            setSlist(arr){
+                this.slist = JSON.parse(JSON.stringify(arr))
+            },
+            addDialog:function(){
+                this.mode = 1
+                this.title = '新建信息'
+                this.selectedlist = {
+                    name:'',
+                    phone:'',
+                    address:'山西省',
+                    type:'中通',
+                    number:''
+                }
+                this.isActive = true
+            },
+            openEditDialog:function(index){
+                this.mode = 2
+                this.title = '编辑信息 '+ this.list[index].name
+                this.selectedlist = this.list[index]
+                this.sindex = index
+
+                this.changeOverlay()
+            },
+            changeOverlay(){
+                this.isActive = !this.isActive
+            },
+            del:function(index){
+                this.slist.splice(index,1)
+                this.setSlist(this.slist)
+            },
+            savelist:function(arr){
+                if (this.mode == 2) {
+                    Vue.set(this.list, this.sindex, arr);
+
+                } else if(this.mode == 1){
+                    console.log(arr)
+                    this.list.push(arr);
+                }
+
+                this.setSlist(this.list);
+                this.changeOverlay();
+            },
+            search:function(e){
+                var val = e.target.value
+                var self = this
+                console.log(this)
+                if(val){
+                    // 存放过滤后的数据
+                    var temp = []
+                    this.list.forEach(function(item){
+                        if(item.name.indexOf(val) > -1){
+                            if(self.searchlist.indexOf(item.name) == -1){
+                                self.searchlist.push(item.name)
+                            }
+                            temp.push(item)
+                        }else if(item.type.indexOf(val) >-1){
+                            if(self.searchlist.indexOf(item.type) == -1){
+                                self.searchlist.push(item.type)
+                            }
+                            temp.push(item)
+                        }
+                    })
+                    this.setSlist(temp)
+
+                }else{
+                    this.setSlist(this.list);
+
+                }
+
+
+            }
+
+        }
+    })
+</script>
+</html>
