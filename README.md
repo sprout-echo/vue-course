@@ -42,7 +42,8 @@ new Vue({
    vm.$on('funcName',function(data){})
 
 父子组件之间的访问：
-** 父访问子： 使用$children  或  $refs
-** 子访问父： $parent
-** 子访问跟： $root
+* 父访问子： 使用$children  或  $refs
+* 子访问父： $parent
+* 子访问跟： $root
+
 4,vue2.x废弃了ready钩子函数，但同时增加了created,mounted,updated等钩子函数
