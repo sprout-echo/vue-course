@@ -35,3 +35,13 @@ new Vue({
 
 <span>{{msg|filterFun}}</span>
 ```
+3，关于组件间通信 vue2.x废弃了$loadcast,$dispatch，events，官方推荐使用vuex或者全局的事件驱动
+
+父组件可以通过props将数据赋给子组件  可以用async实现双向绑定
+vm.$emit('funcName',data)
+vm.$on('funcName',function(data){})
+
+父子组件之间的访问：
+** 父访问子： 使用$children  或  $refs
+** 子访问父： $parent
+** 子访问跟： $root
