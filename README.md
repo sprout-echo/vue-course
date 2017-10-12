@@ -1,7 +1,7 @@
 # vue-curd
 ### 对vue1.x vue2.x实现简单的数据表格的增删查改，总结不同版本的区别点
 1，在组件模板中，不支持片段代码
-  `<blockquote>`
+```javascript
   之前:
      <template>
          <h3>我是组件</h3><strong>我是加粗标签</strong>
@@ -18,4 +18,4 @@
             template:'#aaa'
         });
      </script>
-  `<blockquote>` 
+ ```
