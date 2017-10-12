@@ -46,4 +46,14 @@ new Vue({
 * 子访问父： $parent
 * 子访问跟： $root
 
-4,vue2.x废弃了ready钩子函数，但同时增加了created,mounted,updated等钩子函数
+4,vue2.x废弃了ready钩子函数，但同时增加了beforeMount,mounted,updated等钩子函数
+
+5,v-for语法迭代 vue2.x丢弃了 $index,$key
+  
+  新的语法： （item,index）in arr
+
+6,vue1.x中可以使用 body元素作为挂载点，但是在vue2.x中，如果使用body或者html作为挂载点，会有以下告警：
+  ```
+  Do not mount Vue to <html> or <body> - mount to normal elements instead.
+  ```
+  
