@@ -53,6 +53,7 @@ new Vue({
   新的语法： （item,index）in arr
 
 6,vue1.x中可以使用 body元素作为挂载点，但是在vue2.x中，如果使用body或者html作为挂载点，会有以下告警：
+
   ```
   Do not mount Vue to <html> or <body> - mount to normal elements instead.
   ```
