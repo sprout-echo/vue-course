@@ -1,0 +1,255 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>VUE CURD</title>
+        <style>
+            body{background: #efefef;}
+            *{padding: 0;margin:0;font-family: 微软雅黑;}
+            #app{position: relative;width:100%;height:100%;}
+            #cover{width: 100%;height:25%;background: -webkit-radial-gradient(center,#7aa4b0,#224153);padding: 5% 0;}
+            h1{color: #fff;width: 70%;margin:0 15%;}
+            input{background: transparent;border:1px solid #eee; padding: 6px;border-radius: 3px;margin:10 10 5 15%;width: 220px;outline: none}
+            button{padding: 6px 10px;border-radius: 3px;background: #94c51e;border:0px;color: #fff;cursor: pointer;outline: none;}
+            table{text-align: center;width:70%;margin:20px 15%;background: #fff;border:0px;border-radius: 3px;font-size: 13px;}
+            th,td{border-left:1px solid #eee;border-bottom:1px solid #eee;padding: 3px;}
+            thead{background: #444;color: #fff;}
+            thead th{padding: 8px;}
+            .addBtn{margin-left: 15%;}
+            .modyBtn{background: #707ec5;}
+            .delBtn{background: #f5af3d;}
+            #grid-template, #dialog-template{
+				display: none;
+			}
+            .dialog label{display: inline-block;width:100px;text-align: right;}
+            .dialog input,.dialog select{display: inline-block;margin-left: 10px;border:1px solid #999;padding: 6px;border-radius: 3px;outline: none;
+            }
+            .dialog-footer{margin:10px 30%;}
+            .dialog{width: 500px;position: fixed;left:50%;transform:translateX(-50%);top:120px;z-index: 2000;visibility: hidden;}
+            .dialog-active{visibility: visible;}
+            .dialog-active ~ .dialog-mask{opacity: 1;visibility: visible;}
+            .dialog-mask{content: "";position: fixed;visibility: hidden;top:0;left:0;right:0;bottom:0;z-index:1000;opacity: 0;background: rgba(0,0,0,0.5);transition: all 0.6s;}
+            .dialog-header{padding: 8px;background: #444;color: #fff;}
+            .dialog-content {
+            	border-radius: 3px;
+            	background: #fff;
+            	overflow: hidden;
+            	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            	transition: .5s ease-in-out;
+            	opacity: 0;
+            	transform: rotateY(-70deg);
+            }
+            .dialog-active .dialog-content {
+            	opacity: 1;
+            	transform: rotateY(0);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div id="cover">
+                <h1>快递单号</h1>
+                <div id="search">
+                    <input type="text" v-model="searchQuery" placeholder="search..."/>
+
+                </div>
+                <simple-grid :data-list="list" :columns="columns" :search-key="searchQuery"></simple-grid>
+            </div>
+        </div>
+            <template id="grid-template">
+                <button @click="openNewItemDialog('Create new Item')" class="addBtn">新增</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <!-- capitalize将字符串的首字母转换为大写后输出。 -->
+                            <th v-for='col in columns'>
+                                {{col.title | capitalize}}
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- filterBy searchKey根据指定条件过滤数组元素，filterBy返回过滤后的数组。 -->
+                        <tr v-for="(index,item) in dataList | filterBy searchKey">
+                            <td v-for="col in columns">
+                                {{item[col.title]}}
+                            </td>
+                            <td>
+                                <button class="modyBtn" @click="openEditItemDialog(index)">修改</button>
+                                <button @click="deleteItem(item)" class="delBtn">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- v-on绑定自定义事件 -->
+                <simple-dialog :item="item" :title="title" :fields="columns" :mode="mode" v-on:create-item="createItem" v-on:update-item="updateItem"></simple-dialog>
+            </template>
+
+            <template id="dialog-template">
+                <div class="dialog" v-bind:class="{'dialog-active':show}">
+                    <div class="dialog-content">
+                        <header class="dialog-header">
+                            <h3>{{title}}</h3>
+                        </header>
+                        <section class="dialog-body">
+                            <div v-for="field in fields">
+                                <label>{{field.title}}</label>
+                                <select v-if="field.addrSource" v-model="item[field.title]">
+                                    <option v-for="addr in field.addrSource" :value="addr">{{addr}}</option>
+                                </select>
+
+                                <select v-if="field.dataSource" v-model="item[field.title]">
+                                    <option v-for="opt in field.dataSource" :value="opt">{{opt}}</option>
+                                </select>
+                                <input v-else type="text" v-model="item[field.title]"/>
+                            </div>
+                        </section>
+                        <footer class="dialog-footer">
+                            <button @click='save'>Save</button>
+                            <button @click="close">Close</button>
+                        </footer>
+                    </div>
+                </div>
+                <div class="dialog-mask"></div>
+            </template>
+    </body>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('simple-grid',{
+            template:"#grid-template",
+            props:['dataList','columns','searchKey'],
+            data : function(){
+                return {
+                    mode:0,
+                    title:'',
+                    keyColumn:'',
+                    item:{}
+                }
+            },
+            methods:{
+                openNewItemDialog:function(title){
+                    this.title = title
+                    // mode=1表示新建
+                    this.mode = 1
+                    this.item = {
+                        name:'',
+                        phone:'',
+                        address:'山西省',
+                        type:'中通',
+                        number:'45006677902'
+                    }
+                    this.$broadcast('showDialog',true)
+                },
+                openEditItemDialog:function(index){
+                    var key = this.$parent.list[index].name;
+                    this.keyColumn = index
+
+                    this.title = 'Edit item '+ key
+                    // mode = 2表示修改模式
+                    this.mode = 2
+                    // 初始化this.item
+                    this.item = {}
+                    // 将选中的数据拷贝到this.item
+                    this.item = this.initItemForUpdate(this.$parent.list[index])
+
+                    this.$broadcast('showDialog',true)
+                },
+                createItem:function(){
+                    this.dataList.push(this.item)
+
+                    this.$broadcast('showDialog',false)
+
+                    this.item = {}
+                },
+                // 弹出修改数据的对话框时，使用对象的深拷贝
+                initItemForUpdate: function(p) {
+                    var c = c || {};
+                    for(var i in p) {
+                        // 属性i是否为p对象的自有属性
+                        if(p.hasOwnProperty(i)) {
+                            if(typeof p[i] === 'object') {
+                                c[i] = Array.isArray(p[i]) ? [] : {}
+                                deepCopy(p[i], c[i])
+                            } else {
+                                // 属性是基础类型时，直接拷贝
+                                c[i] = p[i]
+                            }
+                        }
+                    }
+                    return c;
+                },
+                updateItem:function(){
+                    var keyColumn = this.keyColumn
+
+                    for(var j in this.item){
+                        this.dataList[keyColumn][j] = this.item[j]
+                    }
+                    this.$broadcast('showDialog', false)
+                    // 修改完数据后，重置item对象
+                    this.item = {}
+                },
+                deleteItem:function(item){
+                    var data = this.dataList
+                    data.forEach(function(it,i){
+                        if(it == item){
+                            data.splice(i,1)
+                            return
+                        }
+                    })
+                }
+            },
+            components:{
+                'simple-dialog':{
+                    template:'#dialog-template',
+                    data:function(){
+                        return{
+                            // 对话框不显示
+                            show:false
+                        }
+                    },
+                    props:['mode','item','title','fields'],
+                    methods:{
+                        close:function(){
+                            this.show = false
+                        },
+                        save:function(){
+                            if(this.mode == 1){
+                                this.$dispatch('create-item')
+                            }else if(this.mode == 2){
+                                this.$dispatch('update-item')
+                            }
+                        }
+                    },
+                    events:{
+                        'showDialog':function(show){
+                            this.show = show
+                        }
+                    }
+                }
+            }
+        });
+        new Vue({
+            el:"#app",
+            data:{
+                searchQuery:'',
+                columns:[
+                    {title:'name'},
+                    {title:'phone'},
+                    {
+                        title:'address',
+                        addrSource:['山西省','陕西省','广东省','河南省','四川省','江苏省','福建省','湖南省','湖北省','上海市','北京市','云南省','青海省']
+                    },
+                    {
+                        title:'type',
+                        dataSource:['中通','圆通','顺丰','韵达','申通']
+                    },
+                    {title:'number'}
+                ],
+                list:[
+                    {name:'andy',phone:'18888889999',address:'山西省晋中市',type:'中通',number:'45006677902'},
+                    {name:'tony',phone:'14488678099',address:'山西省运城市',type:'圆通',number:'45002804344'},
+                    {name:'Lily',phone:'188255699709',address:'陕西省西安市',type:'韵达',number:'32006677902'},
+                ]
+            }
+        });
+    </script>
+</html>
