@@ -14,6 +14,6 @@
 
 5，用vue全家桶开发完整项目
 
-* 如果你是vue的初学者，可以先看[基础篇][https://github.com/sprout-echo/vue-course/blob/master/vue-base/vue-base.md]
+* 如果你是vue的初学者，可以先看[基础篇](https://github.com/sprout-echo/vue-course/blob/master/vue-base/vue-base.md)
 
-* 看完基础篇之后，可以动手写个小demo，很常见的一个表单的增删查改 [vue-curd][https://github.com/sprout-echo/vue-course/blob/master/vue-curd/vue-curd.md]
+* 看完基础篇之后，可以动手写个小demo，很常见的一个表单的增删查改 [vue-curd](https://github.com/sprout-echo/vue-course/blob/master/vue-curd/vue-curd.md)
