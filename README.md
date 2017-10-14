@@ -20,4 +20,4 @@
 
 * 看完基础篇之后，可以动手写个小demo，很常见的一个表单的增删查改 [vue-curd](https://github.com/sprout-echo/vue-course/blob/master/vue-curd/vue-curd.md)
 
-* 单页面应用，常用router来实现，[路由](https://github.com/sprout-echo/vue-course/blob/master/vue-router/vue-router.md)，这个教程是帮助你快速上手vue-router的使用。更细节的部分，还是看[vue-router文档](https://router.vuejs.org/)
+* 单页面应用，常用router来实现，[路由教程](https://github.com/sprout-echo/vue-course/blob/master/vue-router/vue-router.md)，这个教程是帮助你快速上手vue-router的使用。更细节的部分，还是看[vue-router文档](https://router.vuejs.org/)
