@@ -13,6 +13,7 @@
 4，状态管理器vuex
 
 5，用vue全家桶开发完整项目
+-------------------------------------------------------------------------------
 
 * 如果你是vue的初学者，可以先看[基础篇](https://github.com/sprout-echo/vue-course/blob/master/vue-base/vue-base.md)
 
