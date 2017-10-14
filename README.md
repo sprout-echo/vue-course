@@ -1,1 +1,1 @@
-# VUE speed learning course
+# Vue speed learning course
