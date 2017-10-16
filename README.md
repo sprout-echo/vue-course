@@ -14,7 +14,9 @@
 
 > 4，状态管理器vuex
 
-> 5，用vue全家桶开发完整项目
+> 5, webpack的简单学习
+
+> 6，用vue全家桶开发完整项目
 
 -------------------------------------------------------------------------------
 
@@ -26,9 +28,7 @@
 
 * 状态管理 [vuex教程](https://github.com/sprout-echo/vue-course/tree/master/vuex/vuex.md)，这篇文章主要还是看了[官方文档](https://vuex.vuejs.org/zh-cn/installation.html)，再加入自己的一些理解，进行总结的。对于一些简单的应用，没有必要使用vuex，会使代码臃肿。
 
-下一篇文章我们会详细介绍用vue全家桶（vue+vuex+webpack）完成一个完整项目的开发
-
-##### 对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
+* 对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
 
 > 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
 ```
