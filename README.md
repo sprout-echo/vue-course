@@ -30,7 +30,7 @@
 
 ##### 对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
 
-> 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
++ 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
 ```
 npm install -g vue-cli
 ```
