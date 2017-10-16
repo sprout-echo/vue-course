@@ -28,26 +28,26 @@
 
 下一篇文章我们会详细介绍用vue全家桶（vue+vuex+webpack）完成一个完整项目的开发
 
-对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
+##### 对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
 
 > 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
 ```
 npm install -g vue-cli
 ```
-使用这种方式比较慢，我们常用cnpm淘宝镜像来安装
+> 使用这种方式比较慢，我们常用cnpm淘宝镜像来安装
 ```
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
-如果安装失败，可以使用 npm cache clean 清理缓存，然后再重新安装。
+> 如果安装失败，可以使用 npm cache clean 清理缓存，然后再重新安装。
 然后使用 cnpm 安装 
 ```
 cnpm install -g vue-cli
 ```
-然后使用vue-cli初始化项目
+> 然后使用vue-cli初始化项目
 ```
 vue init webpack project-name
 ```
-这里的project-name就是你项目的文件夹名称
+> 这里的project-name就是你项目的文件夹名称
 
 -------------------------------------------------------------------------
 最后
