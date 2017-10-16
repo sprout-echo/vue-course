@@ -1,4 +1,4 @@
-# Vue speed learning course
+# Vue快速学习
 
 总结一下自己学习的vue知识，希望可以帮助到别人，同时，如果有一些错误的地方，希望可以得到指正，可以提issue，或者发邮件 imhwyer@163.com。希望可以多交流前端的知识，共同进步
 
