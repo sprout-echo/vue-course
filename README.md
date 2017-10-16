@@ -24,6 +24,8 @@
 
 * 单页面应用，常用router来实现，[路由教程](https://github.com/sprout-echo/vue-course/blob/master/vue-router/vue-router.md)，这个教程是帮助你快速上手vue-router的使用。更细节的部分，还是看[vue-router文档](https://router.vuejs.org/)
 
+* 状态管理 [vuex教程](https://github.com/sprout-echo/vue-course/tree/master/vuex/vuex.md)，这篇文章主要还是看了[官方文档](https://vuex.vuejs.org/zh-cn/installation.html)，再加入自己的一些理解，进行总结的。对于一些简单的应用，没有必要使用vuex，会使代码臃肿。
+
 -------------------------------------------------------------------------
 最后
 
