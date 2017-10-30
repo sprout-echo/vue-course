@@ -30,6 +30,11 @@
 
 * 对于webpack的学习，我在之前学习react的时候，看官网的时候，总结了一个[webpack配置](https://github.com/sprout-echo/vue-course/tree/master/webpack/webpack.md)，涉及到一些常用的插件，更多的我还不是很熟练
 
+* vue全家桶（vue+webapck+vuex+vue-router）实现的[在线简历编辑](https://github.com/sprout-echo/onlineresume)
+
+ 有登录，简历编辑，简历预览等多个页面组成，用vue-router实现路由切换，支持代码编辑后导出pdf保存
+
+
 > 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
 ```
 npm install -g vue-cli
