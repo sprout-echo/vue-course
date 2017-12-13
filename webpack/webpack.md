@@ -113,5 +113,10 @@ module.exports = {
 }
 
 ```
+在实际开发中，我们会针对对个开发环境，配置多个webpack配置文件,以下链接是我平时开发react时配置的文件，可作为参考：
 
-但是，其实vue提供了一个非常方便的脚手架 vue-cli,可以帮助我们快速搭建环境开发
+* ![webpack.config.base.js](https://github.com/sprout-echo/vue-course/blob/master/webpack/webpack.config.base.js)    配置一些开发，生产环境公共的部分
+* ![webpack.config.dev.js](https://github.com/sprout-echo/vue-course/blob/master/webpack/webpack.config.dev.js)     开发环境，主要是搭建一个开发时的服务器，可以配置devServer,然后利用 webpack-dev-server
+* ![webpack.config.build.js](https://github.com/sprout-echo/vue-course/blob/master/webpack/webpack.config.build.js)   生产环境，主要是将文件进行压缩打包等
+
+但是，其实vue提供了一个非常方便的脚手架 vue-cli,可以帮助我们快速搭建环境开发，我们可以用vue-cli生成项目，然后打开webpack的文件，看一下相关的配置
