@@ -18,6 +18,8 @@
 
 > 6，用vue全家桶开发完整项目
 
+> 7.vmf 移动端框架
+
 -------------------------------------------------------------------------------
 
 * 如果你是vue的初学者，可以先看[基础篇](https://github.com/sprout-echo/vue-course/blob/master/vue-base/vue-base.md)
@@ -32,8 +34,9 @@
 
 * vue全家桶（vue+webapck+vuex+vue-router）实现的[在线简历编辑](https://github.com/sprout-echo/onlineresume)
 
-   有登录，简历编辑，简历预览等多个页面组成，用vue-router实现路由切换，支持代码编辑后导出pdf保存
+   有登录，简历编辑，简历预览等多个页面组成，用vue-router实现路由切换，支持代码编辑后导出pdf保存
 
+* [vmf](https://github.com/sprout-echo/vmf)开发的一个移动端的框架，包括轮播图，转场动画等
 ------------------------------------------------------------------------------------------------
 > 当然 vue提供了一个很方便的脚手架 vue-cli,可以帮助我们快速搭建环境和开发。
 ```
