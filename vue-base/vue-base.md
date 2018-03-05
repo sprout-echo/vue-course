@@ -149,7 +149,7 @@ new Vue({
 
 对于复杂一些的js逻辑代码，可以用v-on绑定一个方法名，如：
 ```
-<button v-on:greet>Greet</button>    
+<button v-on:click="greet">Greet</button>    
 new Vue({
     //...
     data:{
